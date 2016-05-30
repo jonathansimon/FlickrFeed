@@ -29,18 +29,35 @@ Clicking on the photo in the details screen will open Flickr link in your Androi
 The app is built with Android Studio and Gradle, all IDE files are in the project. You should be able to download Android Studio and clone this repo, then build and run the project. Reach out to me if there are any issues, and I'll help get you set up. 
 
 The app uses a few external libraries: 
-  * <a href="https://github.com/google/gson">GSON</a>: This is a library from Google that assists in parsing JSON feeds into Java objects. 
-  * <a href="http://square.github.io/otto/">Otto</a>: This is a library from Square that implements a message bus using annotations. It's a dead simple, rock solid, easily to implement bus. This is heavily used in the app to manage asyncronous programming (i.e. post to the bus in one class/thread deep in a service and update the UI at some point later). 
-  * <a href="http://square.github.io/Picasso/">Picasso</a>: This is a library from Square that assists in image loading. The main reason this is used is to load an image into an ImageView from a URL without writing all of the connection logic in the app. 
-  
+ * <a href="https://github.com/google/gson">GSON</a>: This is a library from Google that assists in parsing JSON feeds into Java objects. 
+ * <a href="http://square.github.io/otto/">Otto</a>: This is a library from Square that implements a message bus using annotations. It's a dead simple, rock solid, easily to implement bus. This is heavily used in the app to manage asyncronous programming (i.e. post to the bus in one class/thread deep in a service and update the UI at some point later). 
+ * <a href="http://square.github.io/Picasso/">Picasso</a>: This is a library from Square that assists in image loading. The main reason this is used is to load an image into an ImageView from a URL without writing all of the connection logic in the app. 
+ * <a href="http://square.github.io/okhttp/">OK Http</a>: Great library for http requests. More from Square, they make good libraries. (Ask me why!)
+ 
 From an architectural perspective, the root of the app is the custom <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrFeedApplication.java>FlickrFeedApplication</a>. This instantiates the database and kicks off the feed timer thread to update the feed every minute. 
 
 Then there are three main managers: 
-  * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/api/ApiClient.java"> APIClient</a>: Encapsulates all of the logic to make the API calls
-  * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/data/DataPersistenceManager.java">DataPersistenceManager</a>: Encapsulates the sqlite DB, and all access to it including inserts, updates, and queries (i.e. get favorite/all flickr feed items, check for duplicates, etc). 
-  * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/messaging/BusManager.java">BusManager</a>: This encapsulates the Otto bus, as the central location to access, post to the bus, and register/unregister from the bus. 
-  
+ * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/api/ApiClient.java"> APIClient</a>: Encapsulates all of the logic to make the API calls
+ * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/data/DataPersistenceManager.java">DataPersistenceManager</a>: Encapsulates the sqlite DB, and all access to it including inserts, updates, and queries (i.e. get favorite/all flickr feed items, check for duplicates, etc). 
+ * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/messaging/BusManager.java">BusManager</a>: This encapsulates the Otto bus, as the central location to access, post to the bus, and register/unregister from the bus. 
+ 
 There are two screens: 
-  * The <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrPhotoListActivity.java">FlickrPhotoListActivity</a>: This is the main list screen. It handles both the all flicker feed items list, and the favorites list. 
-  * The <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrPhotoDetailFragment.java">FlickrPhotoDetailFragment</a>: This handles the detail view for the photo. 
+ * The <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrPhotoListActivity.java">FlickrPhotoListActivity</a>: This is the main list screen. It handles both the all flicker feed items list, and the favorites list. 
+ * The <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrPhotoDetailFragment.java">FlickrPhotoDetailFragment</a>: This handles the detail view for the photo. This is done by convention as a fragment rather than an activity (as the photo list is) to support two pane views on tablets. However, tablet support is out of scope for this app. 
+ 
+# Disclosures / Room for Improvement
+There is a limit in what you can do in a short period of time. Given that, I wanted to make it clear a list of shortcomings in the app that would be improved given more time. 
+
+ * DB loading / Caching: Right now, all DB queries from the list activity are done on the main thread, and all query the DB even though the changes are potentialy infrequent compared to the navigation speed. This would be greatly improved by caching the set of photos for the list, and avoiding requeries... and especially not querying on the main thread! 
+ * All entries are added to the DB from the feed: Over time, the DB would get potentially huge! Could look into expiring non-favorited old photos. 
+ * All entries are queried from the DB every time: Some care should be given to paging the list in case the DB gets really huge. 
+ * Favorite list order: This should likely be reverse order from when favorited, but right now it shows the favorites in reverse ID order (last added to DB first) but you may have favorited them out of that order. 
+ * Progress indicators: There aren't many. It's good to be overly clear on what's hapening with the app. 
+ * Managers -> Services: Some managers (i.e. the FeedManager) would be better immplemented as a service (much higher cost to implement, much more resilient). Having continuous threads running in objects around the app is not ideal. 
+ * Data management threading: Better handling of threading and responses around accessing and writing of data to the DB. For example, if you press and unpress the favorite FAB repeatedly, bad things will happen. I've solved this repeatedly before, but it requires more plumbing (i.e. first class 'favorite' objects with statuses, asynchronous calls to the DB layer, UI blocking, bus events, etc). 
+ 
+
+
+ 
+
 
