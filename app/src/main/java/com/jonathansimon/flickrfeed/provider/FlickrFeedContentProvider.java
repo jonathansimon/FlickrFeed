@@ -15,10 +15,7 @@ import com.jonathansimon.flickrfeed.data.DataPersistenceManager;
  */
 
 public class FlickrFeedContentProvider extends ContentProvider {
-    static final String PROVIDER_NAME = "com.jonathansimon.flickrfeed";
-    static final String URL = "content://" + PROVIDER_NAME + "/favorites";
-    static final Uri CONTENT_URI = Uri.parse(URL);
-
+    
     @Override
     public boolean onCreate() {
         DataPersistenceManager.getInstance().initialize(this.getContext());
