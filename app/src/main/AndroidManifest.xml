@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <permission android:name="com.jonathansimon.flickrfeed.READ_DATABASE" android:protectionLevel="normal" />
+
     <application
         android:name=".FlickrFeedApplication"
         android:allowBackup="true"
@@ -30,6 +32,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jonathansimon.flickrfeed.FlickrPhotoListActivity" />
         </activity>
+
+        <provider android:name="com.jonathansimon.flickrfeed.provider.FlickrFeedContentProvider"
+            android:authorities="com.jonathansimon.flickrfeed.favorites"
+            android:readPermission="com.jonathansimon.flickrfeed.READ_DATABASE"
+            android:exported="true"
+            >
+        </provider>
+
     </application>
 
 </manifest>

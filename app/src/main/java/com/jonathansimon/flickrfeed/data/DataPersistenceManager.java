@@ -113,6 +113,11 @@ public class DataPersistenceManager {
     }
 
     public List<FlickrPhoto> getFavoriteFlickrPhotos() {
+        Cursor c = getFavoriteFlickrPhotosCursor();
+        return convertCursorToFlickrPhotos(c);
+    }
+
+    public Cursor getFavoriteFlickrPhotosCursor() {
         String sortOrder =
                 FlickrFeedDbHelper.FLICKR_PHOTO_ID + " DESC";
 
@@ -126,7 +131,7 @@ public class DataPersistenceManager {
                 sortOrder
         );
 
-        return convertCursorToFlickrPhotos(c);
+        return c;
     }
 
     public FlickrPhoto getFlickrPhoto(long id) {
