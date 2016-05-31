@@ -14,12 +14,13 @@ The client should:
 Bonus points:  Allow accessing your favorites list from other clients via a method of your choice.
 ```
 
-# Installation Instructions 
+# Running the app
 
-You're welcome to clone the git repo, install the android tools and run the project on your own emulator and devices. However, I also uploaded prebuilt APKs of both the main app and the content provider test (for the Bonus points section). The links are as follows: 
+You have three options for looking at / running the app. 
 
- * Main app: <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk">http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk</a>
- * Content Provider Test (intra app favorite sharing): <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-cp-test-release.apk">http://jonathansimon.com/flickrfeed_release/flickrfeed-cp-test-release.apk</a>
+ * Android Dev Environment: You can clone and run this repo if you already have an (or setup a new) Android development environment. The app uses Android Studio + Gradle so you'll need to have the latest version of Android Studio installed plus newer SDKs and a newer AVD. If you have any questions about this while reviewing, feel free to reach out. 
+
+ * APK Install: You can download a prebuilt/developer-signed APK <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk">here</a>. In order to make this work, you should just need to click on this link on your android device. Note you'll need to allow untrusted applications to be installed on your device since this is a personal developer signed app. 
 
 # Usage Instructions 
 
@@ -55,11 +56,14 @@ There are two screens:
 # Bonus
 How can you say no to bonus points! The app has a content provider included which is a mechanism for Android apps to share information with other Android apps. You can find the content provider <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/provider/FlickrFeedContentProvider.java">here</a>. There is also a <a href="https://github.com/jonathansimon/FlickrFeed/tree/master/content_provider_test/FlickrFeedContentProviderTest">simple example app</a> that invokes the content provider and displays the resulting image URLs in a list. Note, they are entirely separate apps with separate namespaces. 
 
+As with the main app APK install, I generated an APK for the test app. You can download it <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-cp-test-release.apk">here</a>. 
+
 When you load the Content Provider Test app, it will automatically ping your locally installed FlickFeed app and pick up your favorites. If you go back to the FlickrFeed app and add a new favorites, you can press the refresh FAB button on the content provider app. Note: Both apps must be installed on the same device. All information between apps is local, no cloud storage of any kind and no accounts/users/passwords - just plain app-to-app sharing. 
 
 # Disclosures / Room for Improvement
 There is a limit in what you can do in a short period of time. Given that, I wanted to make it clear a list of shortcomings in the app that would be improved given more time. 
 
+ * Tests: Tests are good! There could easily be some unit testing around the persistence layer, the content provider, and other deterministic / easily breakable portions of the app. 
  * DB loading / Caching: Right now, all DB queries from the list activity are done on the main thread, and all query the DB even though the changes are potentialy infrequent compared to the navigation speed. This would be greatly improved by caching the set of photos for the list, and avoiding requeries... and especially not querying on the main thread! 
  * All entries are added to the DB from the feed: Over time, the DB would get potentially huge! Could look into expiring non-favorited old photos. 
  * All entries are queried from the DB every time: Some care should be given to paging the list in case the DB gets really huge. 
