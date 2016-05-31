@@ -16,11 +16,14 @@ Bonus points:  Allow accessing your favorites list from other clients via a met
 
 # Running the app
 
-You have three options for looking at / running the app. 
+You have three options for looking at / running the app. They are listed here in order of least to most effort. 
+
+ * Demo Video: You can view a demo video <a href="http://jonathansimon.com/flickrfeed_release/demo.mp4">here</a> where I walk through the app running on the emulator on my local machine. You'll see the feed, the feed auto-updating (and de-duped), viewing details, favoriting/unfavoriting, viewing the favorites list, and finally viewing the favorites from separate Android app on device.  
+
+ * APK Install: You can download a pre-built, developer-signed APK <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk">here</a>. In order to make this work, you need to click on this link on your android device. Note you'll need to allow untrusted applications to be installed on your device since this is a personal developer signed app. Please be aware the app is optimized for portrait mode phone-sized devices. 
 
  * Android Dev Environment: You can clone and run this repo if you already have an (or setup a new) Android development environment. The app uses Android Studio + Gradle so you'll need to have the latest version of Android Studio installed plus newer SDKs and a newer AVD. If you have any questions about this while reviewing, feel free to reach out. 
 
- * APK Install: You can download a pre-built, developer-signed APK <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk">here</a>. In order to make this work, you need to click on this link on your android device. Note you'll need to allow untrusted applications to be installed on your device since this is a personal developer signed app. Please be aware the app is optimized for portrait mode phone-sized devices. 
 
 # Usage Instructions 
 
