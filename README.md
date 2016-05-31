@@ -14,7 +14,14 @@ The client should:
 Bonus points:  Allow accessing your favorites list from other clients via a method of your choice.
 ```
 
-# User Instructions 
+# Installation Instructions 
+
+You're welcome to clone the git repo, install the android tools and run the project on your own emulator and devices. However, I also uploaded prebuilt APKs of both the main app and the content provider test (for the Bonus points section). The links are as follows: 
+
+ * Main app: <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk">http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk</a>
+ * Content Provider Test (intra app favorite sharing): <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-cp-test-release.apk">http://jonathansimon.com/flickrfeed_cp-test-release/flickrfeed-release.apk</a>
+
+# Usage Instructions 
 
 When you load the application, you will see a list of flickr photos from the feed (photo only in the list). Once a minute, the list will be refreshed with the latest from the feed, de-duplicated (all of the previous photos stay in the list). You will be notified of the update since it's a bit jarring from a user perspective when the list is updated. There are ways to make this cleaner with more time/effort. 
 
@@ -47,6 +54,8 @@ There are two screens:
  
 # Bonus
 How can you say no to bonus points! The app has a content provider included which is a mechanism for Android apps to share information with other Android apps. You can find the content provider <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/provider/FlickrFeedContentProvider.java">here</a>. There is also a <a href="https://github.com/jonathansimon/FlickrFeed/tree/master/content_provider_test/FlickrFeedContentProviderTest">simple example app</a> that invokes the content provider and displays the resulting image URLs in a list. Note, they are entirely separate apps with separate namespaces. 
+
+When you load the Content Provider Test app, it will automatically ping your locally installed FlickFeed app and pick up your favorites. If you go back to the FlickrFeed app and add a new favorites, you can press the refresh FAB button on the content provider app. Note: Both apps must be installed on the same device. All information between apps is local, no cloud storage of any kind and no accounts/users/passwords - just plain app-to-app sharing. 
 
 # Disclosures / Room for Improvement
 There is a limit in what you can do in a short period of time. Given that, I wanted to make it clear a list of shortcomings in the app that would be improved given more time. 
