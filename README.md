@@ -19,7 +19,7 @@ Bonus points:  Allow accessing your favorites list from other clients via a met
 You're welcome to clone the git repo, install the android tools and run the project on your own emulator and devices. However, I also uploaded prebuilt APKs of both the main app and the content provider test (for the Bonus points section). The links are as follows: 
 
  * Main app: <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk">http://jonathansimon.com/flickrfeed_release/flickrfeed-release.apk</a>
- * Content Provider Test (intra app favorite sharing): <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-cp-test-release.apk">http://jonathansimon.com/flickrfeed_cp-test-release/flickrfeed-release.apk</a>
+ * Content Provider Test (intra app favorite sharing): <a href="http://jonathansimon.com/flickrfeed_release/flickrfeed-cp-test-release.apk">http://jonathansimon.com/flickrfeed_release/flickrfeed-cp-test-release.apk</a>
 
 # Usage Instructions 
 
