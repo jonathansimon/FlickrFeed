@@ -45,7 +45,7 @@ The app uses a few external libraries:
  * <a href="http://square.github.io/Picasso/">Picasso</a>: This is a library from Square that assists in image loading. The main reason this is used is to load an image into an ImageView from a URL without writing all of the connection logic in the app, very useful!
  * <a href="http://square.github.io/okhttp/">OK Http</a>: Great library for http requests. More from Square, they make good libraries. (Ask me why!)
  
-From an architectural perspective, the root of the app is the custom <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrFeedApplication.java>FlickrFeedApplication</a>. This instantiates the database and kicks off the feed timer thread to update the feed every minute. 
+From an architectural perspective, the root of the app is the custom <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrFeedApplication.java">FlickrFeedApplication</a>. This instantiates the database and kicks off the feed timer thread to update the feed every minute. 
 
 Then there are three main managers: 
  * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/api/ApiClient.java"> APIClient</a>: Encapsulates all of the logic to make the API calls
