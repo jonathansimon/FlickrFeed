@@ -47,10 +47,12 @@ The app uses a few external libraries:
  
 From an architectural perspective, the root of the app is the custom <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrFeedApplication.java">FlickrFeedApplication</a>. This instantiates the database and kicks off the feed timer thread to update the feed every minute. 
 
-Then there are three main managers: 
+Then there are four main managers: 
  * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/api/ApiClient.java"> APIClient</a>: Encapsulates all of the logic to make the API calls
  * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/data/DataPersistenceManager.java">DataPersistenceManager</a>: Encapsulates the sqlite DB, and all access to it including inserts, updates, and queries (i.e. get favorite/all flickr feed items, check for duplicates, etc). 
  * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/messaging/BusManager.java">BusManager</a>: This encapsulates the Otto bus, as the central location to access, post to the bus, and register/unregister from the bus. 
+ * <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FeedManager.java">FeedManager</a>: This encapsulates the business logic around the feed. In the case of this app, the feed manager has the background thread to check the feed every minute, and add the feed items to the data store. This is also where the duplicate check is handled.   
+ 
  
 There are two screens: 
  * The <a href="https://github.com/jonathansimon/FlickrFeed/blob/master/app/src/main/java/com/jonathansimon/flickrfeed/FlickrPhotoListActivity.java">FlickrPhotoListActivity</a>: This is the main list screen. It handles both the 'all flicker feed' items list, and the 'favorites' list. 
